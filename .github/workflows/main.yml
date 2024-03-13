@@ -8,6 +8,7 @@ jobs:
   run-python-script:
     env:
       SECRET_LINK: ${{secrets.SECRET_LINK}}
+      my_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
