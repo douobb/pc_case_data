@@ -1,0 +1,27 @@
+name: update data
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0,4,8,12,16,20 * * *'
+
+jobs:
+  run-python-script:
+    env:
+      SECRET_LINK: ${{secrets.SECRET_LINK}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.12.2'
+      - run: pip install requests
+      - run: pip install beautifulsoup4
+      - run: pip install pandas
+      - run: pip install git+https://github.com/ozgur/python-firebase
+      - run: python pc_case_data.py
+      - run: |
+          git config --global user.email jason100122@gmail.com
+          git config --global user.name douobb
+          git add .
+          git commit -m "update"
+          git push 
