@@ -309,6 +309,8 @@ for i in range(len(titles)):
   #側板類型
   if("華碩 TUF Gaming GT502" in titles[i] or "微星 MAG PANO M100R PZ" in titles[i] or "微星 MPG GUNGNIR 110R WHITE" in titles[i] or "微星 MPG VELOX 100R WHITE" in titles[i]):
     sidePanel[i] = 0
+  if("Antec P20CE" in titles[i] or "abee AS Enclosure RS07" in titles[i]):
+    sfxPSU[i] = 1
 
 #創建CSV
 df = {"機殼":[],"品牌":[],"容量":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
