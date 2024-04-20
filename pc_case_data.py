@@ -37,19 +37,46 @@ for case in allCase:
 
 #容量
 volume = []
+#最長邊
+length1 = []
+#次長邊
+length2 = []
+#短邊
+length3 = []
 for i in range(len(size)):
   if (("~" in size[i]) or ("(" in size[i])):
     if(size[i].count("*")==2):
       tmp = (size[i]).split("*")
       volume.append(round(min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])])*min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])])*min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[2])])/1000,1))
+      t = [min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])]), min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])]), min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[2])])]
+      t.sort()
+      length3.append(t[0])
+      length2.append(t[1])
+      length1.append(t[2])
     else:
       tmp = (size[i]).split("/")
       t1 = [float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])]
       t2 = [float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])]
-      volume.append(round(min(t1[0]*t1[1]*t1[2]/1000,t2[0]*t2[1]*t2[2]/1000),1))
+      if(t1[0]*t1[1]*t1[2]/1000 > t2[0]*t2[1]*t2[2]/1000):
+        volume.append(round(t2[0]*t2[1]*t2[2]/1000,1))
+        t2.sort()
+        length3.append(t2[0])
+        length2.append(t2[1])
+        length1.append(t2[2])
+      else:
+        volume.append(round(t1[0]*t1[1]*t1[2]/1000,1))
+        t1.sort()
+        length3.append(t1[0])
+        length2.append(t1[1])
+        length1.append(t1[2])
   else:
     tmp = (size[i]).split("*")
     volume.append(round(float(tmp[0])*float(tmp[1])*float(tmp[2])/1000,1))
+    t = [float(tmp[0]), float(tmp[1]), float(tmp[2])]
+    t.sort()
+    length3.append(t[0])
+    length2.append(t[1])
+    length1.append(t[2])
 
 #顯卡長度
 GPULength = []
@@ -293,9 +320,12 @@ for case in allCase:
 
 #例外處理
 for i in range(len(titles)):
-  #容量
+  #容量/邊長
   if("RM23-502" in titles[i]):
     volume[i]/=10
+    length1[i]=58
+    length2[i]=43
+    length3[i]=8.85
   #I/O
   if("聯力 ODYSSEY X" in titles[i]):
     frontIO[i] = "U3*2+TYPE-C*1"
@@ -319,11 +349,14 @@ for i in range(len(titles)):
     sidePanel[i] = 2
 
 #創建CSV
-df = {"機殼":[],"品牌":[],"容量":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
+df = {"機殼":[],"品牌":[],"容量":[],"最長邊":[],"次長邊":[],"短邊":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
 for i in range(len(titles)):
   df["機殼"].append(titles[i])
   df["品牌"].append(brands[i])
   df["容量"].append(volume[i])
+  df["最長邊"].append(length1[i])
+  df["次長邊"].append(length2[i])
+  df["短邊"].append(length3[i])
   df["顯卡長"].append(GPULength[i])
   df["CPU高"].append(CPUHeight[i])
   df["主板"].append(motherboardCompatibility[i])
@@ -368,6 +401,9 @@ for i in range(len(titles)):
     "titles" : titles[i],
     "brands" : brands[i],
     "volume" : volume[i],
+    "length1" : length1[i],
+    "length2" : length2[i],
+    "length3" : length3[i],
     "GPULength" : GPULength[i],
     "CPUHeight" : CPUHeight[i],
     "motherboardCompatibility" : motherboardCompatibility[i],
