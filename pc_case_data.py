@@ -281,6 +281,22 @@ for case in allCase:
   else:
     verticalGPU.append(0)
 
+#支援背插
+backMotherboard = []
+for case in allCase:
+  if (len(case.find_all(string=re.compile("背插")))!=0):
+    backMotherboard.append(1)
+  else:
+    backMotherboard.append(0)
+
+#全景
+tank = []
+for case in allCase:
+  if (len(case.find_all(string=re.compile("全景")))!=0):
+    tank.append(1)
+  else:
+    tank.append(0)
+
 #贈禮
 gift = []
 for case in allCase:
@@ -349,7 +365,7 @@ for i in range(len(titles)):
     sidePanel[i] = 2
 
 #創建CSV
-df = {"機殼":[],"品牌":[],"容量":[],"最長邊":[],"次長邊":[],"短邊":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
+df = {"機殼":[],"品牌":[],"容量":[],"最長邊":[],"次長邊":[],"短邊":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"支援背插":[],"全景魚缸":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
 for i in range(len(titles)):
   df["機殼"].append(titles[i])
   df["品牌"].append(brands[i])
@@ -384,6 +400,8 @@ for i in range(len(titles)):
   df["側板類型"].append(sidePanel[i])
   df["控制器&集線器"].append(fanHub[i])
   df["顯卡垂直安裝"].append(verticalGPU[i])
+  df["支援背插"].append(backMotherboard[i])
+  df["全景魚缸"].append(tank[i])
   df["圖片"].append(images[i])
   df["開箱連結"].append(links[i])
   df["贈禮"].append(gift[i])
@@ -431,6 +449,8 @@ for i in range(len(titles)):
     "sidePanel" : sidePanel[i],
     "fanHub" : fanHub[i],
     "verticalGPU" : verticalGPU[i],
+    "backMotherboard" : backMotherboard[i],
+    "tank" : tank[i],
     "images" : images[i],
     "links" : links[i],
     "gift" : gift[i],
