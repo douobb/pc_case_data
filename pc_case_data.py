@@ -313,6 +313,8 @@ for i in range(len(titles)):
   #側板類型
   if("華碩 TUF Gaming GT502" in titles[i] or "微星 MAG PANO M100R PZ" in titles[i] or "微星 MPG GUNGNIR 110R WHITE" in titles[i] or "微星 MPG VELOX 100R WHITE" in titles[i]):
     sidePanel[i] = 0
+  if("微星 MPG VELOX 100P AIRFLOW" in titles[i] or "BitFenix 亞瑟之劍 黑 鐵網版" in titles[i] or "BitFenix 亞瑟之劍 白 鐵網版" in titles[i] or "MasterBox 520 Mesh" in titles[i]):
+    sidePanel[i] = 0
   if("Antec P20CE" in titles[i]):
     sidePanel[i] = 2
 
