@@ -125,21 +125,106 @@ for case in allCase:
     drivesSupport.append(('|'.join(case.find_all(string=re.compile("硬碟空間")))).replace("硬碟空間：",""))
 
 #硬碟空間細項
-drivesSupportDetail = [["2.5",[]],["3.5",[]]]
-for drives in drivesSupport:
-  for i in range(2):
-    if drivesSupportDetail[i][0] in drives:
-      drivesSupportDetail[i][1].append(1)
+drivesSuppor25 = []
+drivesSuppor35 = []
+drivesSuppor525 = []
+for i in range(len(drivesSupport)):
+  tmp = [0,0,0]
+  drivesSuppor25.append(0)
+  drivesSuppor35.append(0)
+  drivesSuppor525.append(0)
+  if("5.25 or 3.5*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("5.25 or 3.5*")+12:drivesSupport[i].find("5.25 or 3.5*")+14]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("5.25 or 3.5*")+12:drivesSupport[i].find("5.25 or 3.5*")+14])
     else:
-      drivesSupportDetail[i][1].append(0)
-
-#光碟機
-CDSupport = []
-for drives in drivesSupport:
-  if "5.25" in drives:
-    CDSupport.append(int(drives[(drives.find("*"))+1]))
-  else:
-    CDSupport.append(0)
+      t = int(drivesSupport[i][drivesSupport[i].find("5.25 or 3.5*")+12])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+  if("3.5 or 5.25*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("3.5 or 5.25*")+12:drivesSupport[i].find("3.5 or 5.25*")+14]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5 or 5.25*")+12:drivesSupport[i].find("3.5 or 5.25*")+14])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5 or 5.25*")+12])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("3.5 or 5.25*","")
+  if("3.5 or 2.5*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("3.5 or 2.5*")+11:drivesSupport[i].find("3.5 or 2.5*")+13]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5 or 2.5*")+11:drivesSupport[i].find("3.5 or 2.5*")+13])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5 or 2.5*")+11])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("3.5 or 2.5*","")
+  if("2.5 or 3.5*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("2.5 or 3.5*")+11:drivesSupport[i].find("2.5 or 3.5*")+13]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5 or 3.5*")+11:drivesSupport[i].find("2.5 or 3.5*")+13])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5 or 3.5*")+11])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("2.5 or 3.5*","")
+  if("2.5 OR 3.5*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("2.5 OR 3.5*")+11:drivesSupport[i].find("2.5 OR 3.5*")+13]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5 OR 3.5*")+11:drivesSupport[i].find("2.5 OR 3.5*")+13])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5 OR 3.5*")+11])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("2.5 OR 3.5*","")
+  if("共用*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("共用*")+3:drivesSupport[i].find("共用*")+5]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("共用*")+3:drivesSupport[i].find("共用*")+5])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("共用*")+3])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("共用*","")
+  if("3.5/2.5*" in drivesSupport[i]):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("3.5/2.5*")+8:drivesSupport[i].find("3.5/2.5*")+10]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5/2.5*")+8:drivesSupport[i].find("3.5/2.5*")+10])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5/2.5*")+8])
+    drivesSuppor25[i] += t
+    drivesSuppor35[i] += t
+    drivesSupport[i] = drivesSupport[i].replace("3.5/2.5*","")
+  while(drivesSupport[i].find("2.5*") != -1):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("2.5*")+4:drivesSupport[i].find("2.5*")+6]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5*")+4:drivesSupport[i].find("2.5*")+6])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("2.5*")+4])
+    if(t > tmp[0]):
+      tmp[0] = t
+    drivesSupport[i] = drivesSupport[i].replace("2.5*","",1)
+  while(drivesSupport[i].find("3.5*") != -1):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("3.5*")+4:drivesSupport[i].find("3.5*")+6]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5*")+4:drivesSupport[i].find("3.5*")+6])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("3.5*")+4])
+    if(t > tmp[1]):
+      tmp[1] = t
+    drivesSupport[i] = drivesSupport[i].replace("3.5*","",1)
+  while(drivesSupport[i].find("5.25*") != -1):
+    t = 0
+    if((drivesSupport[i][drivesSupport[i].find("5.25*")+5:drivesSupport[i].find("5.25*")+7]).isdigit()):
+      t = int(drivesSupport[i][drivesSupport[i].find("5.25*")+5:drivesSupport[i].find("5.25*")+7])
+    else:
+      t = int(drivesSupport[i][drivesSupport[i].find("5.25*")+5])
+    if(t > tmp[2]):
+      tmp[2] = t
+    drivesSupport[i] = drivesSupport[i].replace("5.25*","",1)
+  drivesSuppor25[i] += tmp[0]
+  drivesSuppor35[i] += tmp[1]
+  drivesSuppor525[i] += tmp[2]
 
 #內附風扇
 fansInside = []
@@ -342,6 +427,11 @@ for i in range(len(titles)):
     length1[i]=58
     length2[i]=43
     length3[i]=8.85
+  #硬碟支援
+  if("Fractal Design Meshify 2" in titles[i] && !("Compact" in titles[i])):
+    drivesSuppor25[i] = 8
+    drivesSuppor35[i] = 6
+    drivesSuppor525[i] = 0
   #I/O
   if("聯力 ODYSSEY X" in titles[i]):
     frontIO[i] = "U3*2+TYPE-C*1"
@@ -394,9 +484,9 @@ for i in range(len(titles)):
   df["IO_TYPE-C"].append(I_O[2][1][i])
   df["IO_HDMI"].append(I_O[3][1][i])
   df["IO_SD讀卡機"].append(I_O[4][1][i])
-  df["硬碟2.5"].append(drivesSupportDetail[0][1][i])
-  df["硬碟3.5"].append(drivesSupportDetail[1][1][i])
-  df["光碟機"].append(CDSupport[i])
+  df["硬碟2.5"].append(drivesSuppor25[i])
+  df["硬碟3.5"].append(drivesSuppor35[i])
+  df["光碟機"].append(drivesSuppor525[i])
   df["側板類型"].append(sidePanel[i])
   df["控制器&集線器"].append(fanHub[i])
   df["顯卡垂直安裝"].append(verticalGPU[i])
@@ -443,9 +533,9 @@ for i in range(len(titles)):
     "IO_TYPE_C" : I_O[2][1][i],
     "IO_HDMI" : I_O[3][1][i],
     "IO_SDReader" : I_O[4][1][i],
-    "drivesSupport25" : drivesSupportDetail[0][1][i],
-    "drivesSupport35" : drivesSupportDetail[1][1][i],
-    "CDSupport" : CDSupport[i],
+    "drivesSupport25" : drivesSuppor25[i],
+    "drivesSupport35" : drivesSuppor35[i],
+    "CDSupport" : drivesSuppor525[i],
     "sidePanel" : sidePanel[i],
     "fanHub" : fanHub[i],
     "verticalGPU" : verticalGPU[i],
