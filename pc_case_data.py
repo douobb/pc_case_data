@@ -315,10 +315,8 @@ for title in titles:
     motherboardCompatibility.append(2)
   elif "ITX" in title:
     motherboardCompatibility.append(3)
-  elif "ATX" in title:
-    motherboardCompatibility.append(1)
   else:
-    motherboardCompatibility.append(4)
+    motherboardCompatibility.append(1)
 
 #價格
 price = []
