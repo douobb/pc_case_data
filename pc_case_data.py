@@ -25,7 +25,7 @@ for i in range(len(titles)):
       b=1
       break
   if (b==0):
-    brands.append(0)
+    brands.append("無")
 
 #尺寸
 size = []
