@@ -425,6 +425,11 @@ for i in range(len(titles)):
     length1[i]=58
     length2[i]=43
     length3[i]=8.85
+  if("全漢 S110-B" in titles[i]):
+    volume[i]/=10
+    length1[i]=38.2
+    length2[i]=35
+    length3[i]=20
   #硬碟支援
   if(("Fractal Design Meshify 2" in titles[i]) and ("Compact" not in titles[i])):
     drivesSuppor25[i] = 8
