@@ -12,7 +12,7 @@ allCase = soup.find_all("span")
 
 #標題
 titles = soup.findAll(class_='t')
-allBrands = ["Fractal Design","COUGAR","曜越","Apexgaming","SAMA","銀欣","聯力","酷碼","Phanteks","全漢","darkFlash","abee","華碩","Montech","視博通","微星","技嘉","旋剛","1st Player","Antec","BitFenix","HYTE","be quiet!","NZXT","賽德斯","喬思伯","迎廣","SSUPD","XPG","海盜船","海韻","i-CoolTw","DEEPCOOL","安耐美"]
+allBrands = ["Fractal Design","COUGAR","曜越","Apexgaming","SAMA","銀欣","聯力","酷碼","Phanteks","全漢","darkFlash","abee","華碩","Montech","視博通","微星","技嘉","旋剛","Antec","BitFenix","HYTE","be quiet!","NZXT","賽德斯","喬思伯","迎廣","SSUPD","XPG","海盜船","海韻","DEEPCOOL","安耐美"]
 
 #品牌
 brands = []
