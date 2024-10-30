@@ -383,7 +383,7 @@ for case in allCase:
 #靜音
 silent = []
 for case in allCase:
-  if (len(case.find_all(string=re.compile("靜音|silent|Silent")))!=0):
+  if (len(case.find_all(string=re.compile("靜音|silent|Silent")))!=0 and len(case.find_all(string=re.compile("靜音風扇")))==0):
     silent.append(1)
   else:
     silent.append(0)
