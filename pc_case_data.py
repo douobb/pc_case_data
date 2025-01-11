@@ -462,7 +462,7 @@ for i in range(len(titles)):
     sidePanel[i] = 0
   if("微星 MPG VELOX 100P AIRFLOW" in titles[i] or "BitFenix 亞瑟之劍 黑 鐵網版" in titles[i] or "BitFenix 亞瑟之劍 白 鐵網版" in titles[i] or "MasterBox 520 Mesh" in titles[i]):
     sidePanel[i] = 0
-  if("華碩 TUF Gaming GT302" in titles[i] or "酷碼 MasterBox TD500 MAX" in titles[i] or "聯力 Q58" in titles[i]):
+  if("華碩 TUF Gaming GT302" in titles[i] or "酷碼 MasterBox TD500 MAX" in titles[i] or "聯力 Q58" in titles[i] or "聯力 SUP01" in titles[i]):
     sidePanel[i] = 0
   if("Antec P20CE" in titles[i]):
     sidePanel[i] = 2
