@@ -5,14 +5,13 @@ from firebase import firebase
 import pandas as pd
 from datetime import datetime,timezone,timedelta
 import os
-import time
 
 res = requests.get('https://www.coolpc.com.tw/eachview.php?IGrp=14')
 soup = BeautifulSoup(res.text, "html.parser")
 allCase = soup.find_all("span")
 
 #標題
-titles = soup.find_all(class_='t')
+titles = soup.findAll(class_='t')
 allBrands = ["Fractal Design","COUGAR","曜越","Apexgaming","SAMA","銀欣","聯力","酷碼","Phanteks","全漢","darkFlash","abee","華碩","Montech","視博通","微星","技嘉","旋剛","Antec","BitFenix","HYTE","be quiet!","NZXT","賽德斯","喬思伯","迎廣","SSUPD","XPG","海盜船","海韻","DEEPCOOL","安耐美"]
 
 #品牌
@@ -48,16 +47,16 @@ for i in range(len(size)):
   if (("~" in size[i]) or ("(" in size[i])):
     if(size[i].count("*")==2):
       tmp = (size[i]).split("*")
-      volume.append(round(min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[0])])*min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[1])])*min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[2])])/1000,1))
-      t = [min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[0])]), min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[1])]), min([float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[2])])]
+      volume.append(round(min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])])*min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])])*min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[2])])/1000,1))
+      t = [min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])]), min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])]), min([float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[2])])]
       t.sort()
       length3.append(t[0])
       length2.append(t[1])
       length1.append(t[2])
     else:
       tmp = (size[i]).split("/")
-      t1 = [float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[0])]
-      t2 = [float(x) for x in re.find_all(r'-?\d+\.?\d*',tmp[1])]
+      t1 = [float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[0])]
+      t2 = [float(x) for x in re.findall(r'-?\d+\.?\d*',tmp[1])]
       if(t1[0]*t1[1]*t1[2]/1000 > t2[0]*t2[1]*t2[2]/1000):
         volume.append(round(t2[0]*t2[1]*t2[2]/1000,1))
         t2.sort()
@@ -84,16 +83,16 @@ GPULength = []
 #CPU高度
 CPUHeight = []
 for title in titles:
-  if (("卡" in title) and (float(re.find_all(r'-?\d+\.?\d*',title[title.find("卡"):])[0])>10)):
-    GPULength.append(float(re.find_all(r'-?\d+\.?\d*',title[title.find("卡"):])[0]))
+  if (("卡" in title) and (float(re.findall(r'-?\d+\.?\d*',title[title.find("卡"):])[0])>10)):
+    GPULength.append(float(re.findall(r'-?\d+\.?\d*',title[title.find("卡"):])[0]))
   else:
     GPULength.append(0)
   if "U高" in title:
-    CPUHeight.append(float(re.find_all(r'-?\d+\.?\d*',title[title.find("U高"):])[0]))
+    CPUHeight.append(float(re.findall(r'-?\d+\.?\d*',title[title.find("U高"):])[0]))
   elif "/U" in title:
-    CPUHeight.append(float(re.find_all(r'-?\d+\.?\d*',title[title.find("/U"):])[0]))
+    CPUHeight.append(float(re.findall(r'-?\d+\.?\d*',title[title.find("/U"):])[0]))
   elif "/CPU" in title:
-    CPUHeight.append(float(re.find_all(r'-?\d+\.?\d*',title[title.find("/CPU"):])[0]))
+    CPUHeight.append(float(re.findall(r'-?\d+\.?\d*',title[title.find("/CPU"):])[0]))
   else:
     CPUHeight.append(0)
 
@@ -392,8 +391,8 @@ for case in allCase:
 #贈禮
 gift = []
 for case in allCase:
-  if (len(case.find_all(class_='g'))!=0):
-    gift.append(str(case.find_all(class_='g')[0].next_element))
+  if (len(case.findAll(class_='g'))!=0):
+    gift.append(str(case.findAll(class_='g')[0].next_element))
   else:
     gift.append("無")
 
@@ -417,7 +416,7 @@ for image in soup.find_all("img"):
 #開箱連結
 links = []
 for case in allCase:
-  if (len(case.find_all("a"))!=0):
+  if (len(case.findAll("a"))!=0):
     for link in case.find_all("a"):
       if (str(link.get("href"))[0]=="/"):
         links.append("https://www.coolpc.com.tw"+str(link.get("href")))
@@ -523,7 +522,6 @@ url = os.environ['SECRET_LINK'] #SECRET_LINK為firebase儲存庫連結
 fdb = firebase.FirebaseApplication(url, None) 
 fdb.delete('/', None)
 for i in range(len(titles)):
-  time.sleep(0.3)
   fdb.put('/',"case "+str(i+1).zfill(3),{
     "titles" : titles[i],
     "brands" : brands[i],
