@@ -522,6 +522,7 @@ url = os.environ['SECRET_LINK'] #SECRET_LINK為firebase儲存庫連結
 fdb = firebase.FirebaseApplication(url, None) 
 fdb.delete('/', None)
 for i in range(len(titles)):
+  time.sleep(1)
   fdb.put('/',"case "+str(i+1).zfill(3),{
     "titles" : titles[i],
     "brands" : brands[i],
