@@ -5,6 +5,7 @@ from firebase import firebase
 import pandas as pd
 from datetime import datetime,timezone,timedelta
 import os
+import time
 
 res = requests.get('https://www.coolpc.com.tw/eachview.php?IGrp=14')
 soup = BeautifulSoup(res.text, "html.parser")
