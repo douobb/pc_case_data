@@ -11,14 +11,17 @@ soup = BeautifulSoup(res.text, "html.parser")
 allCase = soup.find_all("span")
 
 #標題
-titles = soup.findAll(class_='t')
+titles = soup.find_all(class_='t')
 allBrands = ["Fractal Design","COUGAR","曜越","Apexgaming","SAMA","銀欣","聯力","酷碼","Phanteks","全漢","darkFlash","abee","華碩","Montech","視博通","微星","技嘉","旋剛","Antec","BitFenix","HYTE","be quiet!","NZXT","賽德斯","喬思伯","迎廣","SSUPD","XPG","海盜船","海韻","DEEPCOOL","安耐美"]
 
 #品牌
 brands = []
+d = []
 for i in range(len(titles)):
   b=0
   titles[i] = str(titles[i].next_element)
+  if '華碩 GT502 Horizon 機殼專用' in titles[i]:
+    d.append(i)
   for j in range(len(allBrands)):
     if allBrands[j] in titles[i]:
       brands.append(allBrands[j])
@@ -26,6 +29,10 @@ for i in range(len(titles)):
       break
   if (b==0):
     brands.append("其他")
+for i in range(len(d)):
+  del brands[d[i] - i]
+  del titles[d[i] - i]
+  del allCase[d[i] - i]
 
 #尺寸
 size = []
@@ -71,6 +78,8 @@ for i in range(len(size)):
         length1.append(t1[2])
   else:
     tmp = (size[i]).split("*")
+    # print(size[i])
+    # print(tmp)
     volume.append(round(float(tmp[0])*float(tmp[1])*float(tmp[2])/1000,1))
     t = [float(tmp[0]), float(tmp[1]), float(tmp[2])]
     t.sort()
@@ -391,8 +400,8 @@ for case in allCase:
 #贈禮
 gift = []
 for case in allCase:
-  if (len(case.findAll(class_='g'))!=0):
-    gift.append(str(case.findAll(class_='g')[0].next_element))
+  if (len(case.find_all(class_='g'))!=0):
+    gift.append(str(case.find_all(class_='g')[0].next_element))
   else:
     gift.append("無")
 
@@ -416,7 +425,7 @@ for image in soup.find_all("img"):
 #開箱連結
 links = []
 for case in allCase:
-  if (len(case.findAll("a"))!=0):
+  if (len(case.find_all("a"))!=0):
     for link in case.find_all("a"):
       if (str(link.get("href"))[0]=="/"):
         links.append("https://www.coolpc.com.tw"+str(link.get("href")))
@@ -517,53 +526,3 @@ for i in range(len(titles)):
 df = pd.DataFrame.from_dict(df)
 df.to_csv("pc_case.csv",index = False,encoding = "utf-8-sig")
 
-#上傳firebase
-url = os.environ['SECRET_LINK'] #SECRET_LINK為firebase儲存庫連結
-fdb = firebase.FirebaseApplication(url, None) 
-fdb.delete('/', None)
-for i in range(len(titles)):
-  fdb.put('/',"case "+str(i+1).zfill(3),{
-    "titles" : titles[i],
-    "brands" : brands[i],
-    "volume" : volume[i],
-    "length1" : length1[i],
-    "length2" : length2[i],
-    "length3" : length3[i],
-    "GPULength" : GPULength[i],
-    "CPUHeight" : CPUHeight[i],
-    "motherboardCompatibility" : motherboardCompatibility[i],
-    "sfxPSU" : sfxPSU[i],
-    "fansInsideCount" : fansInsideCount[i],
-    "fanSupportFront" : fansSupportDetail[0][i],
-    "fanSupportBack" : fansSupportDetail[1][i],
-    "fanSupportTop" : fansSupportDetail[2][i],
-    "fanSupportBottom" : fansSupportDetail[3][i],
-    "fanSupportSide" : fansSupportDetail[4][i],
-    "LC120" : liquidCoolingDetail[0][1][i],
-    "LC140" : liquidCoolingDetail[1][1][i],
-    "LC240" : liquidCoolingDetail[2][1][i],
-    "LC280" : liquidCoolingDetail[3][1][i],
-    "LC360" : liquidCoolingDetail[4][1][i],
-    "LC420" : liquidCoolingDetail[5][1][i],
-    "IO_U3" : I_O[0][1][i],
-    "IO_U2" : I_O[1][1][i],
-    "IO_TYPE_C" : I_O[2][1][i],
-    "IO_HDMI" : I_O[3][1][i],
-    "IO_SDReader" : I_O[4][1][i],
-    "drivesSupport25" : drivesSuppor25[i],
-    "drivesSupport35" : drivesSuppor35[i],
-    "CDSupport" : drivesSuppor525[i],
-    "sidePanel" : sidePanel[i],
-    "fanHub" : fanHub[i],
-    "verticalGPU" : verticalGPU[i],
-    "backMotherboard" : backMotherboard[i],
-    "tank" : tank[i],
-    "silent" : silent[i],
-    "images" : images[i],
-    "links" : links[i],
-    "gift" : gift[i],
-    "price" : price[i],
-    "detail" : detail[i],
-  })
-with open('log.txt', 'a') as f:
-    f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
