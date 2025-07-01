@@ -526,3 +526,53 @@ for i in range(len(titles)):
 df = pd.DataFrame.from_dict(df)
 df.to_csv("pc_case.csv",index = False,encoding = "utf-8-sig")
 
+#上傳firebase
+url = os.environ['SECRET_LINK'] #SECRET_LINK為firebase儲存庫連結
+fdb = firebase.FirebaseApplication(url, None) 
+fdb.delete('/', None)
+for i in range(len(titles)):
+  fdb.put('/',"case "+str(i+1).zfill(3),{
+    "titles" : titles[i],
+    "brands" : brands[i],
+    "volume" : volume[i],
+    "length1" : length1[i],
+    "length2" : length2[i],
+    "length3" : length3[i],
+    "GPULength" : GPULength[i],
+    "CPUHeight" : CPUHeight[i],
+    "motherboardCompatibility" : motherboardCompatibility[i],
+    "sfxPSU" : sfxPSU[i],
+    "fansInsideCount" : fansInsideCount[i],
+    "fanSupportFront" : fansSupportDetail[0][i],
+    "fanSupportBack" : fansSupportDetail[1][i],
+    "fanSupportTop" : fansSupportDetail[2][i],
+    "fanSupportBottom" : fansSupportDetail[3][i],
+    "fanSupportSide" : fansSupportDetail[4][i],
+    "LC120" : liquidCoolingDetail[0][1][i],
+    "LC140" : liquidCoolingDetail[1][1][i],
+    "LC240" : liquidCoolingDetail[2][1][i],
+    "LC280" : liquidCoolingDetail[3][1][i],
+    "LC360" : liquidCoolingDetail[4][1][i],
+    "LC420" : liquidCoolingDetail[5][1][i],
+    "IO_U3" : I_O[0][1][i],
+    "IO_U2" : I_O[1][1][i],
+    "IO_TYPE_C" : I_O[2][1][i],
+    "IO_HDMI" : I_O[3][1][i],
+    "IO_SDReader" : I_O[4][1][i],
+    "drivesSupport25" : drivesSuppor25[i],
+    "drivesSupport35" : drivesSuppor35[i],
+    "CDSupport" : drivesSuppor525[i],
+    "sidePanel" : sidePanel[i],
+    "fanHub" : fanHub[i],
+    "verticalGPU" : verticalGPU[i],
+    "backMotherboard" : backMotherboard[i],
+    "tank" : tank[i],
+    "silent" : silent[i],
+    "images" : images[i],
+    "links" : links[i],
+    "gift" : gift[i],
+    "price" : price[i],
+    "detail" : detail[i],
+  })
+with open('log.txt', 'a') as f:
+    f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
