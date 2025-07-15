@@ -78,8 +78,6 @@ for i in range(len(size)):
         length1.append(t1[2])
   else:
     tmp = (size[i]).split("*")
-    # print(size[i])
-    # print(tmp)
     volume.append(round(float(tmp[0])*float(tmp[1])*float(tmp[2])/1000,1))
     t = [float(tmp[0]), float(tmp[1]), float(tmp[2])]
     t.sort()
@@ -421,6 +419,8 @@ for case in allCase:
 images = []
 for image in soup.find_all("img"):
   images.append("https://www.coolpc.com.tw"+str(image.get("src")))
+for i in range(len(d)):
+  del images[d[i] - i]
 
 #開箱連結
 links = []
@@ -477,7 +477,7 @@ for i in range(len(titles)):
     sidePanel[i] = 2
   #內附風扇數
   if("微星 MAG FORGE 120A AIRFLOW" in titles[i]):
-    fansInsideCount[i] = 6;
+    fansInsideCount[i] = 6
 
 #創建CSV
 df = {"機殼":[],"品牌":[],"容量":[],"最長邊":[],"次長邊":[],"短邊":[],"顯卡長":[],"CPU高":[],"主板":[],"電供":[],"內附風扇數":[],"風扇前":[],"風扇後":[],"風扇上":[],"風扇下":[],"風扇側":[],"水冷120":[],"水冷140":[],"水冷240":[],"水冷280":[],"水冷360":[],"水冷420":[],"IO_U3":[],"IO_U2":[],"IO_TYPE-C":[],"IO_HDMI":[],"IO_SD讀卡機":[],"硬碟2.5":[],"硬碟3.5":[],"光碟機":[],"側板類型":[],"控制器&集線器":[],"顯卡垂直安裝":[],"支援背插":[],"全景魚缸":[],"靜音機殼":[],"圖片":[],"開箱連結":[],"贈禮":[],"價格":[]}
@@ -526,7 +526,7 @@ for i in range(len(titles)):
 df = pd.DataFrame.from_dict(df)
 df.to_csv("pc_case.csv",index = False,encoding = "utf-8-sig")
 
-#上傳firebase
+# 上傳firebase
 url = os.environ['SECRET_LINK'] #SECRET_LINK為firebase儲存庫連結
 fdb = firebase.FirebaseApplication(url, None) 
 fdb.delete('/', None)
