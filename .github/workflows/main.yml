@@ -2,18 +2,18 @@ name: update data
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 0,2,4,6,8,10,12,14,16,18,20,22 * * *'
+    - cron:  '0 0,3,6,9,12,15,18,21 * * *'
 
 jobs:
   run-python-script:
     env:
       SECRET_LINK: ${{secrets.SECRET_LINK}}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.8.0'
+          python-version: '3.12.2'
       - run: pip install requests
       - run: pip install beautifulsoup4
       - run: pip install pandas
