@@ -11,15 +11,16 @@ soup = BeautifulSoup(res.text, "html.parser")
 allCase = soup.find_all("span")
 
 #標題
-titles = soup.find_all(class_='t')
+allTitles = soup.find_all(class_='t')
 allBrands = ["Fractal Design","COUGAR","曜越","Apexgaming","SAMA","銀欣","聯力","酷碼","Phanteks","全漢","darkFlash","abee","華碩","Montech","視博通","微星","技嘉","旋剛","Antec","BitFenix","HYTE","be quiet!","NZXT","賽德斯","喬思伯","迎廣","SSUPD","XPG","海盜船","海韻","DEEPCOOL","安耐美"]
 
 #品牌
 brands = []
 d = []
-for i in range(len(titles)):
+titles = []
+for i in range(len(allTitles)):
   b=0
-  titles[i] = str(titles[i].next_element)
+  titles.append(str(allTitles[i].next_element))
   if '華碩 GT502 Horizon 機殼專用' in titles[i]:
     d.append(i)
   for j in range(len(allBrands)):
@@ -575,4 +576,5 @@ for i in range(len(titles)):
     "detail" : detail[i],
   })
 with open('log.txt', 'a') as f:
+
     f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
