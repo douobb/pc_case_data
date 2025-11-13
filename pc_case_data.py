@@ -217,7 +217,8 @@ for i in range(len(drivesSupport)):
     if((drivesSupport[i][drivesSupport[i].find("3.5*")+4:drivesSupport[i].find("3.5*")+6]).isdigit()):
       t = int(drivesSupport[i][drivesSupport[i].find("3.5*")+4:drivesSupport[i].find("3.5*")+6])
     else:
-      t = int(drivesSupport[i][drivesSupport[i].find("3.5*")+4])
+      if(drivesSupport[i][drivesSupport[i].find("2.5*")+4] == '/'): t = 1
+      else: t = int(drivesSupport[i][drivesSupport[i].find("2.5*")+4])
     if(t > tmp[1]):
       tmp[1] = t
     drivesSupport[i] = drivesSupport[i].replace("3.5*","",1)
@@ -581,4 +582,5 @@ fdb.put('/', '/', all_cases)
 with open('log.txt', 'a') as f:
 
     f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
+
 
