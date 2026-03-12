@@ -21,7 +21,7 @@ titles = []
 for i in range(len(allTitles)):
   b=0
   titles.append(str(allTitles[i].next_element))
-  if '華碩 GT502 Horizon 機殼專用' in titles[i]:
+  if '華碩 GT502 Horizon 機殼專用' in titles[i] or '火鳥 BitFenix 機殼' in titles[i]:
     d.append(i)
   for j in range(len(allBrands)):
     if allBrands[j] in titles[i]:
@@ -582,6 +582,7 @@ fdb.put('/', '/', all_cases)
 with open('log.txt', 'a') as f:
 
     f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
+
 
 
 
