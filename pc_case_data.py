@@ -20,9 +20,7 @@ d = []
 titles = []
 cases = [
   '華碩 GT502 Horizon 機殼專用',
-  '火鳥 BitFenix 機殼',
-  '華碩 ProArt PA602 胡桃木金屬版(現代黑)',
-  '華碩 ProArt PA602 胡桃木透側版(現代黑)'
+  '【限搭購喬思伯機殼】'
 ]
 for i in range(len(allTitles)):
   b=0
@@ -475,11 +473,9 @@ for i in range(len(titles)):
   if("銀欣 SUGO 16" in titles[i] or "abee AS Enclosure RS07" in titles[i]):
     sfxPSU[i] = 0
   #側板類型
-  if("華碩 TUF Gaming GT502" in titles[i] or "微星 MAG PANO M100R PZ" in titles[i] or "微星 MPG GUNGNIR 110R WHITE" in titles[i] or "微星 MPG VELOX 100R WHITE" in titles[i]):
+  if("華碩 TUF Gaming GT502" in titles[i] or "華碩 TUF Gaming GT302" in titles[i] or "微星 MAG PANO M100R PZ" in titles[i]):
     sidePanel[i] = 0
-  if("微星 MPG VELOX 100P AIRFLOW" in titles[i] or "BitFenix 亞瑟之劍 黑 鐵網版" in titles[i] or "BitFenix 亞瑟之劍 白 鐵網版" in titles[i] or "MasterBox 520 Mesh" in titles[i]):
-    sidePanel[i] = 0
-  if("華碩 TUF Gaming GT302" in titles[i] or "酷碼 MasterBox TD500 MAX" in titles[i] or "聯力 Q58" in titles[i] or "聯力 SUP01" in titles[i]):
+  if("微星 MPG VELOX 100P AIRFLOW" in titles[i] or "MasterBox 520 Mesh" in titles[i]):
     sidePanel[i] = 0
   if("Antec P20CE" in titles[i]):
     sidePanel[i] = 2
@@ -588,7 +584,3 @@ fdb.put('/', '/', all_cases)
 with open('log.txt', 'a') as f:
 
     f.write(str(datetime.now().astimezone(timezone(timedelta(hours=8))).strftime("%Y/%m/%d %H:%M:%S"))+" update "+str(len(titles))+" data\n")
-
-
-
-
